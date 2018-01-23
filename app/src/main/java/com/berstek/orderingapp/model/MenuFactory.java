@@ -7,7 +7,7 @@ public class MenuFactory {
   private ArrayList<Menu> menus = new ArrayList<>();
 
   public MenuFactory() {
-
+    //Test comment
 
   }
 
