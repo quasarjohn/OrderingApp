@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+
+<resources>
+
+    <color name="colorPrimary">#558b2f</color>
+
+    <color name="colorPrimaryLight">#85bb5c</color>
+
+    <color name="colorPrimaryDark">#255d00</color>
+
+    <color name="colorAccent">#f9a825</color>
+
+    <color name="colorAccentLight">#ffd95a</color>
+
+    <color name="colorAccentDark">#c17900</color>
+
+    <color name="primaryTextColor">#000000</color>
+
+    <color name="secondaryTextColor">#ffffff</color>
+
+    <color name="custom_blur_tint">#8F000000</color>
+
+    <color name="material_background">#eeeeee</color>
+
+</resources>
