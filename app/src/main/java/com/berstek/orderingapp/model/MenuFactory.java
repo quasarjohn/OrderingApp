@@ -59,7 +59,7 @@ public class MenuFactory {
 
     Menu m6 = new Menu();
     m6.setImg_url("https://s3-media2.fl.yelpcdn.com/bphoto/gQ4JRfY753xixWmz0eVPeQ/o.jpg");
-    m6.setTitle("Chicasilog");
+    m6.setTitle("Chicsilog");
     m6.setPrice(100);
     m6.setDetails("chitcharong bituka sinangag itlog");
     m6.setPriority(8);
