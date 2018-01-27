@@ -34,7 +34,7 @@
     <dimen name="card_elevation_default">2dp</dimen>
     <dimen name="card_elevation_raised">8dp</dimen>
 
-    <dimen name="menu_dialog_height">450dp</dimen>
+    <dimen name="menu_dialog_height">350dp</dimen>
     <dimen name="menu_dialog_width">350dp</dimen>
 
     <dimen name="button_min_height">50dp</dimen>

@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.berstek.orderingapp.R;
+import com.berstek.orderingapp.callbacks.BinaryDecisionCallback;
 import com.berstek.orderingapp.custom_classes.CustomDialogFragment;
 import com.berstek.orderingapp.model.Menu;
 import com.berstek.orderingapp.utils.StringUtils;
@@ -31,6 +32,7 @@ public class ProceedDialogFragment extends CustomDialogFragment implements View.
 
   private Button proceed, back;
 
+  private BinaryDecisionCallback binaryDecisionCallback;
 
   public ProceedDialogFragment() {
     // Required empty public constructor
@@ -72,6 +74,16 @@ public class ProceedDialogFragment extends CustomDialogFragment implements View.
 
   @Override
   public void onClick(View view) {
+    int id = view.getId();
 
+    if (id == R.id.proceed) {
+      binaryDecisionCallback.onProceed();
+    } else {
+      binaryDecisionCallback.onCancel();
+    }
+  }
+
+  public void setBinaryDecisionCallback(BinaryDecisionCallback binaryDecisionCallback) {
+    this.binaryDecisionCallback = binaryDecisionCallback;
   }
 }

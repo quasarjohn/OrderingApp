@@ -17,9 +17,13 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.berstek.orderingapp.R;
+import com.berstek.orderingapp.callbacks.BinaryDecisionCallback;
 import com.berstek.orderingapp.callbacks.ItemClickCallback;
 import com.berstek.orderingapp.callbacks.OnSortTypeChangedListener;
+import com.berstek.orderingapp.data_access.DA;
+import com.berstek.orderingapp.data_access.OrderDA;
 import com.berstek.orderingapp.model.Menu;
+import com.berstek.orderingapp.model.Order;
 import com.berstek.orderingapp.utils.StringUtils;
 
 
@@ -45,6 +49,9 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
   private TextView cartPrice;
 
   private Button proceedBtn;
+  private ProceedDialogFragment dialogFragment;
+
+  private OrderDA orderDA;
 
 
   @Override
@@ -91,7 +98,39 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
 
   @Override
   public void onClick(View view) {
-    ProceedDialogFragment dialogFragment = new ProceedDialogFragment();
+    dialogFragment = new ProceedDialogFragment();
+    dialogFragment.setBinaryDecisionCallback(new BinaryDecisionCallback() {
+      @Override
+      public void onCancel() {
+        dialogFragment.dismiss();
+      }
+
+      @Override
+      public void onProceed() {
+        Order order = new Order();
+        order.setCart(cart);
+        order.setOrder_status(Order.OrderStatus.QUEUED);
+        order.setTime_stamp(System.currentTimeMillis());
+
+        String orderKey = orderDA.pushOrderToQueue(order);
+        new DA().log(orderKey);
+
+        orderDA.setOrderStatusListener(new OrderDA.OrderStatusListener() {
+          @Override
+          public void onOrderRemoved() {
+
+          }
+
+          @Override
+          public void onOrderAdded() {
+
+          }
+        });
+
+        orderDA.listenToOrderCompletion();
+        dialogFragment.dismiss();
+      }
+    });
 
     ArrayList carts = new ArrayList<>();
     carts.add(cart);
@@ -103,6 +142,7 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
     dialogFragment.show(getFragmentManager(), null);
   }
 
+
   public enum SortType {
     PRIORITY, PRICE, NAME
   }
@@ -111,6 +151,8 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
+
+    orderDA = new OrderDA();
 
     getSupportActionBar().hide();
     cart = new ArrayList<>();

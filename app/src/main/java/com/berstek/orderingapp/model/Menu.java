@@ -2,6 +2,8 @@ package com.berstek.orderingapp.model;
 
 import android.support.annotation.NonNull;
 
+import com.google.firebase.database.Exclude;
+
 import java.util.Comparator;
 
 public class Menu implements Comparable<Menu> {
@@ -58,6 +60,7 @@ public class Menu implements Comparable<Menu> {
     this.priority = priority;
   }
 
+  @Exclude
   public Comparator<Menu> getTitleComparator() {
     return titleComparator;
   }
@@ -66,11 +69,13 @@ public class Menu implements Comparable<Menu> {
     this.titleComparator = titleComparator;
   }
 
+  @Exclude
   @Override
   public int compareTo(@NonNull Menu menu) {
     return (int) (this.price - menu.getPrice());
   }
 
+  @Exclude
   public static Comparator<Menu> titleComparator = new Comparator<Menu>() {
     @Override
     public int compare(Menu menu, Menu t1) {
@@ -78,6 +83,7 @@ public class Menu implements Comparable<Menu> {
     }
   };
 
+  @Exclude
   public static Comparator<Menu> priorityComparator = new Comparator<Menu>() {
     @Override
     public int compare(Menu menu, Menu t1) {
@@ -85,6 +91,7 @@ public class Menu implements Comparable<Menu> {
     }
   };
 
+  @Exclude
   public static Comparator<Menu> priceComparator = new Comparator<Menu>() {
     @Override
     public int compare(Menu menu, Menu t1) {
