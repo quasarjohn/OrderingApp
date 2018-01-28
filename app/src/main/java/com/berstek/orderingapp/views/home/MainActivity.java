@@ -53,6 +53,7 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
 
   private OrderDA orderDA;
 
+  private String orderKey;
 
   @Override
   public void onItemClick(int p) {
@@ -112,23 +113,19 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
         order.setOrder_status(Order.OrderStatus.QUEUED);
         order.setTime_stamp(System.currentTimeMillis());
 
-        String orderKey = orderDA.pushOrderToQueue(order);
+        orderKey = orderDA.pushOrderToQueue(order);
         new DA().log(orderKey);
 
-        orderDA.setOrderStatusListener(new OrderDA.OrderStatusListener() {
-          @Override
-          public void onOrderRemoved() {
-
-          }
-
-          @Override
-          public void onOrderAdded() {
-
-          }
-        });
-
-        orderDA.listenToOrderCompletion();
+        cart.clear();
+        cartAdapter.notifyDataSetChanged();
         dialogFragment.dismiss();
+
+        Bundle bundle = new Bundle();
+        bundle.putString("orderKey", orderKey);
+
+        WaitingDialogFragment waitingDialogFragment = new WaitingDialogFragment();
+        waitingDialogFragment.setArguments(bundle);
+        waitingDialogFragment.show(getFragmentManager(), null);
       }
     });
 

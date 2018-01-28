@@ -34,6 +34,7 @@ public class OrderDA extends DA {
     rootRef.child(node).addChildEventListener(new ChildEventListener() {
       @Override
       public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+        orderStatusListener.onOrderAdded(dataSnapshot);
       }
 
       @Override
@@ -43,7 +44,7 @@ public class OrderDA extends DA {
 
       @Override
       public void onChildRemoved(DataSnapshot dataSnapshot) {
-        orderStatusListener.onOrderRemoved();
+        orderStatusListener.onOrderRemoved(dataSnapshot);
       }
 
       @Override
@@ -59,9 +60,9 @@ public class OrderDA extends DA {
   }
 
   public interface OrderStatusListener {
-    void onOrderRemoved();
+    void onOrderRemoved(DataSnapshot dataSnapshot);
 
-    void onOrderAdded();
+    void onOrderAdded(DataSnapshot dataSnapshot);
   }
 
   private OrderStatusListener orderStatusListener;
