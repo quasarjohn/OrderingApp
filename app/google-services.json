@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "266098739409",
+    "firebase_url": "https://orderingapp-ff7f9.firebaseio.com",
+    "project_id": "orderingapp-ff7f9",
+    "storage_bucket": "orderingapp-ff7f9.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:266098739409:android:278a066feaa0cff9",
+        "android_client_info": {
+          "package_name": "com.berstek.orderingapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "266098739409-b6u3rvh2hgmu99tn2cis1pbf51vvfob9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.berstek.orderingapp",
+            "certificate_hash": "8db0d63de64616e770dfc76902b25a53c89146ac"
+          }
+        },
+        {
+          "client_id": "266098739409-bosbm28tt3o3bpp320gema5pdm5curm4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD1f01JxFjcxuIBtLnNg_fS9GUwvIat8iE"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "266098739409-bosbm28tt3o3bpp320gema5pdm5curm4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

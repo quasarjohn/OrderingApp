@@ -50,10 +50,12 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
 
   private Button proceedBtn;
   private ProceedDialogFragment dialogFragment;
+  private WaitingDialogFragment waitingDialogFragment;
 
   private OrderDA orderDA;
 
   private String orderKey;
+  private String table_id;
 
   @Override
   public void onItemClick(int p) {
@@ -109,6 +111,7 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
       @Override
       public void onProceed() {
         Order order = new Order();
+        order.setTable_id(table_id);
         order.setCart(cart);
         order.setOrder_status(Order.OrderStatus.QUEUED);
         order.setTime_stamp(System.currentTimeMillis());
@@ -123,7 +126,7 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
         Bundle bundle = new Bundle();
         bundle.putString("orderKey", orderKey);
 
-        WaitingDialogFragment waitingDialogFragment = new WaitingDialogFragment();
+        waitingDialogFragment = new WaitingDialogFragment();
         waitingDialogFragment.setArguments(bundle);
         waitingDialogFragment.show(getFragmentManager(), null);
       }
@@ -148,6 +151,8 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
+
+    table_id = getIntent().getExtras().getString("table_id");
 
     orderDA = new OrderDA();
 

@@ -1,6 +1,7 @@
 package com.berstek.orderingapp.views.home;
 
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -68,5 +69,9 @@ public class WaitingDialogFragment extends CustomDialogFragment {
 
     super.onCreateView(inflater, container, savedInstanceState);
     return view;
+  }
+
+  @Override
+  public void onDismiss(DialogInterface dialog) {
   }
 }
