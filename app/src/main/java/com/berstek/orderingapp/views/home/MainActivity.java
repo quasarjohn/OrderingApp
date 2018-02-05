@@ -113,7 +113,6 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
         Order order = new Order();
         order.setTable_id(table_id);
         order.setCart(cart);
-        order.setOrder_status(Order.OrderStatus.QUEUED);
         order.setTime_stamp(System.currentTimeMillis());
 
         orderKey = orderDA.pushOrderToQueue(order);
@@ -175,10 +174,10 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
     Fragment mainMenuFragment = new MainMenuFragment();
     fragments.add(mainMenuFragment);
 
-    Fragment drinksFragment = new DrinksFragment();
+    Fragment drinksFragment = new MainMenuFragment();
     fragments.add(drinksFragment);
 
-    Fragment dessertsFragment = new DessertsFragment();
+    Fragment dessertsFragment = new MainMenuFragment();
     fragments.add(dessertsFragment);
 
     for (int i = 0; i < fragments.size(); i++) {
@@ -210,7 +209,7 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
       }
     });
 
-    initRecviewcart();
+    initRecviewCart();
   }
 
   @Override
@@ -246,7 +245,7 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
     }
   }
 
-  private void initRecviewcart() {
+  private void initRecviewCart() {
     recview_cart = findViewById(R.id.recview_cart);
     recview_cart.setLayoutManager(new LinearLayoutManager(this));
 

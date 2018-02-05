@@ -12,6 +12,9 @@ public class Menu implements Comparable<Menu> {
   private double price;
   private int priority;
 
+  @Exclude
+  private String key;
+
   public String getTitle() {
     return title;
   }
@@ -98,4 +101,12 @@ public class Menu implements Comparable<Menu> {
       return (int) (menu.getPrice() - t1.getPrice());
     }
   };
+
+  public String getKey() {
+    return key;
+  }
+
+  public void setKey(String key) {
+    this.key = key;
+  }
 }

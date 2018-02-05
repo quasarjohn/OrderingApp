@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import com.berstek.orderingapp.R;
 import com.berstek.orderingapp.callbacks.ItemClickCallback;
 import com.berstek.orderingapp.callbacks.OnSortTypeChangedListener;
+import com.berstek.orderingapp.data_access.MenuDA;
 import com.berstek.orderingapp.model.Menu;
 import com.berstek.orderingapp.model.MenuFactory;
 import com.google.android.flexbox.FlexDirection;
@@ -24,7 +25,8 @@ import java.util.Collections;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class MainMenuFragment extends Fragment implements OnSortTypeChangedListener, ItemClickCallback {
+public class MainMenuFragment extends Fragment implements OnSortTypeChangedListener,
+    ItemClickCallback, MenuDA.MenuDaCallback {
 
   private View view;
   private RecyclerView recviewMenu;
@@ -32,6 +34,7 @@ public class MainMenuFragment extends Fragment implements OnSortTypeChangedListe
   private MenuAdapter adapter;
   private ItemClickCallback callback;
 
+  private MenuDA menuDA;
 
   public MainMenuFragment() {
     // Required empty public constructor
@@ -50,6 +53,10 @@ public class MainMenuFragment extends Fragment implements OnSortTypeChangedListe
 
     view = inflater.inflate(R.layout.fragment_main_menu, container, false);
 
+    menuDA = new MenuDA();
+    menuDA.setMenuDaCallback(this);
+    menuDA.queryMenu(MenuDA.MenuType.MENUS);
+
     recviewMenu = view.findViewById(R.id.recview_menu);
 
     FlexboxLayoutManager layoutManager = new FlexboxLayoutManager(getContext());
@@ -58,9 +65,8 @@ public class MainMenuFragment extends Fragment implements OnSortTypeChangedListe
 
     recviewMenu.setLayoutManager(layoutManager);
 
-    menus = new MenuFactory().getMenus();
+    menus = new ArrayList<>();
     Collections.sort(menus, Menu.priceComparator);
-
 
     adapter = new MenuAdapter(getContext(), menus);
 
@@ -97,5 +103,33 @@ public class MainMenuFragment extends Fragment implements OnSortTypeChangedListe
   @Override
   public void onMenuSelected(Menu menu, int source) {
 
+  }
+
+  @Override
+  public void onMenuLoaded(Menu menu) {
+    menus.add(menu);
+    adapter.notifyDataSetChanged();
+  }
+
+  @Override
+  public void onMenuChanged(Menu menu) {
+    for (int i = 0; i < menus.size(); i++) {
+      if (menus.get(i).getKey().equals(menu.getKey())) {
+        menus.set(i, menu);
+        adapter.notifyItemChanged(i);
+        break;
+      }
+    }
+  }
+
+  @Override
+  public void onMenuRemoved(Menu menu) {
+    for (int i = 0; i < menus.size(); i++) {
+      if (menus.get(i).getKey().equals(menu.getKey())) {
+        menus.remove(i);
+        adapter.notifyItemRemoved(i);
+        break;
+      }
+    }
   }
 }

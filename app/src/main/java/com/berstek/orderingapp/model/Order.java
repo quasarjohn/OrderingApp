@@ -9,14 +9,10 @@ public class Order {
   private ArrayList<Menu> cart;
   private long time_stamp;
   private String table_id;
-  private OrderStatus order_status;
 
   @Exclude
   private String key;
 
-  public enum OrderStatus {
-    QUEUED, READY, SERVED
-  }
 
   public ArrayList<Menu> getCart() {
     return cart;
@@ -40,14 +36,6 @@ public class Order {
 
   public void setTable_id(String table_id) {
     this.table_id = table_id;
-  }
-
-  public OrderStatus getOrder_status() {
-    return order_status;
-  }
-
-  public void setOrder_status(OrderStatus order_status) {
-    this.order_status = order_status;
   }
 
   @Exclude
