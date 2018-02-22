@@ -172,12 +172,22 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
     viewPager = findViewById(R.id.viewpager);
 
     Fragment mainMenuFragment = new MainMenuFragment();
+    Bundle b1 = new Bundle();
+    b1.putString("menu", "menus");
+    mainMenuFragment.setArguments(b1);
     fragments.add(mainMenuFragment);
 
     Fragment drinksFragment = new MainMenuFragment();
+    Bundle b2 = new Bundle();
+    b2.putString("menu", "drinks");
+    drinksFragment.setArguments(b2);
     fragments.add(drinksFragment);
 
+
     Fragment dessertsFragment = new MainMenuFragment();
+    Bundle b3 = new Bundle();
+    b3.putString("menu", "desserts");
+    dessertsFragment.setArguments(b3);
     fragments.add(dessertsFragment);
 
     for (int i = 0; i < fragments.size(); i++) {

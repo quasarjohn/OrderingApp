@@ -36,6 +36,8 @@ public class MainMenuFragment extends Fragment implements OnSortTypeChangedListe
 
   private MenuDA menuDA;
 
+  private String menu;
+
   public MainMenuFragment() {
     // Required empty public constructor
   }
@@ -53,9 +55,32 @@ public class MainMenuFragment extends Fragment implements OnSortTypeChangedListe
 
     view = inflater.inflate(R.layout.fragment_main_menu, container, false);
 
+    menus = new ArrayList<>();
+
+    menu = getArguments().getString("menu");
+
+    MenuDA.MenuType menuType;
+
+
+    assert menu != null;
+    switch (menu) {
+      case "drinks":
+        menuType = MenuDA.MenuType.DRINKS;
+        break;
+      case "menus":
+        menuType = MenuDA.MenuType.MENUS;
+        break;
+      case "desserts":
+        menuType = MenuDA.MenuType.DESSERTS;
+        break;
+      default:
+        menuType = MenuDA.MenuType.MENUS;
+        break;
+    }
+
     menuDA = new MenuDA();
     menuDA.setMenuDaCallback(this);
-    menuDA.queryMenu(MenuDA.MenuType.MENUS);
+    menuDA.queryMenu2(menuType);
 
     recviewMenu = view.findViewById(R.id.recview_menu);
 
@@ -65,12 +90,7 @@ public class MainMenuFragment extends Fragment implements OnSortTypeChangedListe
 
     recviewMenu.setLayoutManager(layoutManager);
 
-    menus = new ArrayList<>();
-    Collections.sort(menus, Menu.priceComparator);
-
     adapter = new MenuAdapter(getContext(), menus);
-
-
     adapter.setCallback(this);
     recviewMenu.setAdapter(adapter);
 
@@ -86,13 +106,15 @@ public class MainMenuFragment extends Fragment implements OnSortTypeChangedListe
     else
       Collections.sort(menus, Menu.priorityComparator);
 
-    adapter.notifyDataSetChanged();
-
+    adapter = new MenuAdapter(getContext(), menus);
+    adapter.setCallback(this);
+    recviewMenu.setAdapter(adapter);
   }
 
   @Override
   public void onItemClick(int p) {
-    callback.onMenuSelected(menus.get(p), 0);
+    callback.onMenuSelected(menus.get(p), 0
+    );
   }
 
   @Override
@@ -107,8 +129,7 @@ public class MainMenuFragment extends Fragment implements OnSortTypeChangedListe
 
   @Override
   public void onMenuLoaded(Menu menu) {
-    menus.add(menu);
-    adapter.notifyDataSetChanged();
+
   }
 
   @Override
@@ -124,12 +145,40 @@ public class MainMenuFragment extends Fragment implements OnSortTypeChangedListe
 
   @Override
   public void onMenuRemoved(Menu menu) {
-    for (int i = 0; i < menus.size(); i++) {
-      if (menus.get(i).getKey().equals(menu.getKey())) {
-        menus.remove(i);
-        adapter.notifyItemRemoved(i);
-        break;
-      }
+//    for (int i = 0; i < menus.size(); i++) {
+//      if (menus.get(i).getKey().equals(menu.getKey())) {
+//        menus.remove(i);
+//        adapter.notifyItemRemoved(i);
+//        break;
+//      }
+//    }
+  }
+
+  boolean menuLoaded = false;
+
+  @Override
+  public void onCompleteMenuLoaded(ArrayList<Menu> m) {
+
+    menus = m;
+
+
+    Collections.sort(menus, Menu.priceComparator);
+
+    int empty_grids = 3 - (menus.size() % 3);
+
+    for (int i = 0; i < empty_grids; i++) {
+      Menu menu = new Menu();
+      menu.setTitle("ZZZZZZZZZZ");
+      menu.setPriority(999999);
+      menu.setPrice(999999);
+      menus.add(menu);
     }
+
+    adapter = new MenuAdapter(getContext(), menus);
+    adapter.setCallback(this);
+    recviewMenu.setAdapter(adapter);
+
+    menuLoaded = true;
+
   }
 }

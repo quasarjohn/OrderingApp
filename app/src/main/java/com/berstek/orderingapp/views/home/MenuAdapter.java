@@ -46,18 +46,23 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ListHolder> {
   @Override
   public void onBindViewHolder(ListHolder holder, int position) {
     Menu m = data.get(position);
-    holder.subtitle.setText(StringUtils.removeDecimalIfZero(
-        StringUtils.getPesoSign() + " " + StringUtils.formatDf00(m.getPrice())));
-    holder.title.setText(m.getTitle());
-    holder.details.setText(m.getDetails());
+    if (!m.getTitle().equals("ZZZZZZZZZZ")) {
+      holder.subtitle.setText(StringUtils.removeDecimalIfZero(
+          StringUtils.getPesoSign() + " " + StringUtils.formatDf00(m.getPrice())));
+      holder.title.setText(m.getTitle());
+      holder.details.setText(m.getDetails());
 
-    Log.d(null, m.getImg_url());
+      Log.d(null, m.getImg_url());
 
-    Glide.with(context).load(m.getImg_url()).
-        skipMemoryCache(true).
-        override(300, 200).
-        centerCrop().
-        into(holder.foodImg);
+      Glide.with(context).load(m.getImg_url()).
+          skipMemoryCache(true).
+          override(500, 250).
+          centerCrop().
+          into(holder.foodImg);
+    }
+    else {
+      holder.itemView.setVisibility(View.INVISIBLE);
+    }
   }
 
   @Override
@@ -69,9 +74,12 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ListHolder> {
 
     private TextView title, subtitle, details;
     private ImageView foodImg;
+    private View itemView;
 
     public ListHolder(View itemView) {
       super(itemView);
+
+      this.itemView = itemView;
 
       title = itemView.findViewById(R.id.title);
       subtitle = itemView.findViewById(R.id.subtitle);

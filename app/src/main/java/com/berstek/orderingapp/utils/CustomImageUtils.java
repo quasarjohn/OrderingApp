@@ -85,6 +85,7 @@ public class CustomImageUtils {
             @Override
             public void run() {
               imageView.setImageBitmap(myBitmap);
+              imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
 
               BitmapDrawable img = (BitmapDrawable) imageView.getDrawable();
               Bitmap bitmap = img.getBitmap();

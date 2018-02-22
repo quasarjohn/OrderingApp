@@ -12,6 +12,8 @@ public class Menu implements Comparable<Menu> {
   private double price;
   private int priority;
 
+  private boolean available;
+
   @Exclude
   private String key;
 
@@ -108,5 +110,29 @@ public class Menu implements Comparable<Menu> {
 
   public void setKey(String key) {
     this.key = key;
+  }
+
+  public boolean isAvailable() {
+    return available;
+  }
+
+  public void setAvailable(boolean available) {
+    this.available = available;
+  }
+
+  public static Comparator<Menu> getPriorityComparator() {
+    return priorityComparator;
+  }
+
+  public static void setPriorityComparator(Comparator<Menu> priorityComparator) {
+    Menu.priorityComparator = priorityComparator;
+  }
+
+  public static Comparator<Menu> getPriceComparator() {
+    return priceComparator;
+  }
+
+  public static void setPriceComparator(Comparator<Menu> priceComparator) {
+    Menu.priceComparator = priceComparator;
   }
 }

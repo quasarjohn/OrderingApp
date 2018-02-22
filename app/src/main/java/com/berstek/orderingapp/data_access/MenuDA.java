@@ -4,6 +4,9 @@ import com.berstek.orderingapp.model.Menu;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
 
 public class MenuDA extends DA {
 
@@ -44,6 +47,28 @@ public class MenuDA extends DA {
     });
   }
 
+  ArrayList<Menu> menus = new ArrayList<>();
+
+  public void queryMenu2(final MenuType menuType) {
+    rootRef.child(menuType.toString().toLowerCase()).addValueEventListener(new ValueEventListener() {
+      @Override
+      public void onDataChange(DataSnapshot dataSnapshot) {
+        menus.clear();
+        for (DataSnapshot child : dataSnapshot.getChildren()) {
+          Menu m = child.getValue(Menu.class);
+          if (m.isAvailable())
+            menus.add(m);
+        }
+        menuDaCallback.onCompleteMenuLoaded(menus);
+      }
+
+      @Override
+      public void onCancelled(DatabaseError databaseError) {
+
+      }
+    });
+  }
+
 
   public enum MenuType {
     MENUS, DRINKS, DESSERTS;
@@ -55,6 +80,8 @@ public class MenuDA extends DA {
     void onMenuChanged(Menu menu);
 
     void onMenuRemoved(Menu menu);
+
+    void onCompleteMenuLoaded(ArrayList<Menu> menus);
   }
 
   public void setMenuDaCallback(MenuDaCallback menuDaCallback) {

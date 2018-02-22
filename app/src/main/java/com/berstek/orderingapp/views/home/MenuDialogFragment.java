@@ -89,7 +89,7 @@ public class MenuDialogFragment extends CustomDialogFragment implements View.OnC
     minus.setOnClickListener(this);
     plus.setOnClickListener(this);
 
-    CustomImageUtils customImageUtils = new CustomImageUtils(350, 300);
+    CustomImageUtils customImageUtils = new CustomImageUtils(600, 300);
     customImageUtils.blurImage(getActivity(), menu.getImg_url(), foodImg, false);
 
     initDrinksRecview();

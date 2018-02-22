@@ -1,7 +1,5 @@
 package com.berstek.orderingapp.utils;
 
-import android.util.Log;
-
 import java.text.DecimalFormat;
 
 public class StringUtils {
