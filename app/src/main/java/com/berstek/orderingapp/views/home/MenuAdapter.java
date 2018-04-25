@@ -52,7 +52,6 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ListHolder> {
       holder.title.setText(m.getTitle());
       holder.details.setText(m.getDetails());
 
-      Log.d(null, m.getImg_url());
 
       Glide.with(context).load(m.getImg_url()).
           skipMemoryCache(true).

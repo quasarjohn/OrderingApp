@@ -1,5 +1,6 @@
 package com.berstek.orderingapp.views.home;
 
+import android.content.pm.ActivityInfo;
 import android.os.Parcelable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -128,6 +129,8 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
         waitingDialogFragment = new WaitingDialogFragment();
         waitingDialogFragment.setArguments(bundle);
         waitingDialogFragment.show(getFragmentManager(), null);
+
+        cartPrice.setText("");
       }
     });
 
@@ -150,6 +153,8 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
+
+    setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 
     table_id = getIntent().getExtras().getString("table_id");
 
